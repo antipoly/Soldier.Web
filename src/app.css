@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@100..900&family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins-latin-800-normal.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+}
+
+:root {
+  --page-bg: #303431;
+  background-color: var(--page-bg);
+}
+
+@theme {
+  --font-bungee: "Bungee", sans-serif;
+  --text-title: 1.8rem;
+  --color-white: #E9E9E9;
+}
+
+.hero {
+  font-family: 'Poppins', sans-serif;
+}
