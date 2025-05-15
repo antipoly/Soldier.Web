@@ -8,21 +8,9 @@
 <div class="backdrop">
   <Navbar />
 
-  <div class="h-48 w-48"></div>
-  <div class="h-48 w-48"></div>
-  <div class="h-48 w-48"></div>
-  <div class="h-48 w-48"></div>
-  <div class="h-48 w-48"></div>
-  <div class="h-48 w-48"></div>
-  <div class="h-48 w-48"></div>
-  <div class="h-48 w-48"></div>
-  <div class="h-48 w-48"></div>
-  <div class="h-48 w-48"></div>
-  <div class="h-48 w-48"></div>
-  <div class="h-48 w-48"></div>
-  <div class="h-48 w-48"></div>
-  <div class="h-48 w-48"></div>
-  {@render children()}
+  <div class="pt-16 pl-24">
+    {@render children()}
+  </div>
 </div>
 
 <style>
