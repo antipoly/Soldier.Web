@@ -8,7 +8,7 @@
 <div class="backdrop">
   <Navbar />
 
-  <div class="pt-16 pl-24">
+  <div class="mt-14 ml-24">
     {@render children()}
   </div>
 </div>
@@ -17,6 +17,7 @@
   .backdrop {
     position: relative; /* Ensures content is positioned relative to the backdrop */
     z-index: 1; /* Content stays above the backdrop */
+    max-height: 100vh;
   }
 
   .backdrop::before {
