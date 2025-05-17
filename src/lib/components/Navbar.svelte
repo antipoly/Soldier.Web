@@ -8,7 +8,7 @@ const menuButtons = [
 
 </script>
 
-<nav class="flex items-center justify-between h-20 w-full pl-24 pr-10 py-5 bg-gradient-to-r from-[#295a9595] via-[#23869B95] to-[#3D67D395] nav-shadow">
+<nav class="flex items-center justify-between h-20 w-full pl-24 pr-10 py-5 bg-gradient-to-r from-[#21497a95] via-[#1d6e8095] to-[#2b4a9795] nav-shadow">
   <a href="/" aria-label="Logo button">
     <div class="flex items-center gap-8">
       <div class="w-[37px] h-[44px] bg-cover bg-no-repeat" style="background-image: url('/logo/Soldier@76x90.png');"></div>

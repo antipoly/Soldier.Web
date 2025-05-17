@@ -8,7 +8,7 @@
 <div class="backdrop">
   <Navbar />
 
-  <div class="mt-14 ml-24">
+  <div class="mt-14 ml-24 mr-16">
     {@render children()}
   </div>
 </div>
@@ -27,10 +27,12 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('/Site.svg') no-repeat center center fixed;
+    background:
+      linear-gradient(to bottom, rgba(26,26,30,0) 75%, var(--page-bg, #1A1A1E) 100%),
+      url('/Site.svg') no-repeat center center fixed;
     background-size: cover;
     z-index: -1;
-    opacity: 0.1;
+    opacity: 0.05;
     pointer-events: none;
   }
 </style>

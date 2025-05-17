@@ -9,7 +9,7 @@
 }
 
 :root {
-  --page-bg: #303431;
+  --page-bg: #1A1A1E;
   background-color: var(--page-bg);
   @apply text-white
 }
