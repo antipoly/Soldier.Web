@@ -8,16 +8,25 @@
   src: url('/fonts/gg sans Regular.woff') format('woff');
 }
 
-:root {
-  --page-bg: #1A1A1E;
-  background-color: var(--page-bg);
-  @apply text-white
-}
-
 @theme {
   --font-bungee: "Bungee", sans-serif;
   --font-poppins: "Poppins", sans-serif;
   --font-karla: "Karla", sans-serif;
   --text-title: 1.8rem;
   --color-white: #E9E9E9;
+  --color-normal: #a1a1a1;
+}
+
+:root {
+  --page-bg: #1A1A1E;
+  background-color: var(--page-bg);
+  @apply text-white
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+button {
+  cursor: pointer;
 }

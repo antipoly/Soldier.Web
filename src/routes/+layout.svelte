@@ -8,7 +8,7 @@
 <div class="backdrop">
   <Navbar />
 
-  <div class="mt-14 ml-24 mr-16">
+  <div class="mt-14 mx-24">
     {@render children()}
   </div>
 </div>
