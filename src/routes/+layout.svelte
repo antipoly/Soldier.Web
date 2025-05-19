@@ -28,7 +28,7 @@
     width: 100%;
     height: 100%;
     background:
-      linear-gradient(to bottom, rgba(26,26,30,0) 75%, var(--page-bg, #1A1A1E) 100%),
+      linear-gradient(to bottom, rgba(26,26,30,0) 75%, var(--background, #1A1A1E) 100%),
       url('/Site.svg') no-repeat center center fixed;
     background-size: cover;
     z-index: -1;

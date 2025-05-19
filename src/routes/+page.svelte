@@ -1,7 +1,8 @@
 <script lang="ts">
   import Icon from "@iconify/svelte";
-  import { fly, fade } from "svelte/transition";
-
+  import { Button } from "$lib/components/ui/button/index";
+  import * as Carousel from "$lib/components/ui/carousel/index";
+  
   interface Feature {
     title: string;
     description: string;
@@ -23,32 +24,6 @@
     { title: "Event Management", description: "Create events that are managed by Soldier to bulk reward users who complete them.", icon: "ion:calendar-sharp", color: "#A93D36" },
     { title: "Configurable Ranklocks", description: "Disallow members from reaching certain ranks or rank ranges.", icon: "uis:padlock", color: "#3642A9" },
   ];
-
-  let activeFeatureIndex = $state(0);
-  // svelte-ignore state_referenced_locally
-  let activeFeature = $state(features[activeFeatureIndex]);
-  let carouselDirection = 1;
-
-  $effect(() => {
-    activeFeature = features[activeFeatureIndex];
-  });
-
-  function cycleFeatures(dir: number) {
-    if (dir == -1) {
-      activeFeatureIndex = (activeFeatureIndex - 1 + features.length) % features.length;
-    } else if (dir == 1) {
-      activeFeatureIndex = (activeFeatureIndex + 1) % features.length;
-    }
-  }
-
-  /**
-   * Wraps the index, so it's never out of bounds
-   * @param index
-   */
-  function getFeature(index: number) {
-    return features[(index + features.length) % features.length];
-  }
-
 </script>
 
 <div class="flex justify-between items-center pt-4">
@@ -74,16 +49,16 @@
     <img src="/logo/Soldier@623x741.png" class="relative z-10 logo-glow w-[324px] h-[384px]" draggable="false" alt="" />
   </div>
 
-  <div class="flex items-center flex-col gap-7">
+  <div class="flex items-center justify-center flex-col gap-7">
     <span class="font-poppins font-semibold text-4xl" id="about">About</span>
-    <div class="px-12 py-8 w-[37rem] rounded-xl bg-[#33394a4a]">
-      <span class="font-poppins font-[500] text-2xl">Soldier was built to surpass expectations</span>
+    <div class="px-12 py-8 w-[35rem] rounded-xl bg-[#33394a4a]">
+      <span class="font-poppins font-[500] text-xl">Soldier was built to surpass expectations...</span>
 
       <div class="mt-10 flex flex-col gap-3">
         {#each atAGlance as feature}
           <div class="flex gap-10 items-center">
-            <img class="w-[60px] h-[60px]" src="/icons/{feature.icon}.png" alt="">
-            <span class="font-poppins text-2xl">{feature.text}</span>
+            <img class="w-[45px] h-[645x]" src="/icons/{feature.icon}.png" alt="">
+            <span class="font-poppins text-xl">{feature.text}</span>
           </div>
         {/each}
       </div>
@@ -94,46 +69,35 @@
 <h2 class="my-16 font-poppins font-semibold text-4xl text-center" id="features">Features</h2>
 
 <div class="flex justify-center">
-  <div class="relative h-[70dvh] w-[80%] rounded-2xl">
+  <div class="relative h-[70dvh] w-[80%] rounded-2xl flex flex-col items-center">
     <div class="absolute bg-[#1b202679] inset-0 -z-10 rounded-3xl blur-lg"></div>
-    <div class="flex items-center justify-center gap-12 relative h-full w-full">
-      {#each [-1, 0, 1] as offset (activeFeatureIndex + offset)}
-        {#key activeFeatureIndex + offset}
-          <div
-            class="absolute transition-transform duration-300"
-            style="left: 50%; transform: translateX(calc(-50% + {offset * 260}px)); z-index: {offset === 0 ? 10 : 1}; opacity: {offset === 0 ? 1 : 0.4}; filter: {offset === 0 ? 'none' : 'blur(2px)'};"
-            transition:fly="{{ x: carouselDirection * 100 * -offset, duration: 300 }}"
-          >
-            <div
-              class="mb-16 flex items-center gap-5 flex-col h-60 w-60 rounded-lg py-7 px-8"
-              style="background: linear-gradient(180deg, {getFeature(activeFeatureIndex + offset).color}c8, {getFeature(activeFeatureIndex + offset).color}14)"
-            >
-              <Icon icon={getFeature(activeFeatureIndex + offset).icon} color="#a1a1a1" width="100" height="100"  />
-              <span class="text-center font-poppins font-semibold text-2xl text-normal">{getFeature(activeFeatureIndex + offset).title}</span>
+    <div class="flex items-end justify-center gap-12 relative h-full w-full">
+      <Carousel.Root class="w-full max-w-xs">
+      <Carousel.Content>
+        {#each Array(5) as _, i (i)}
+          <Carousel.Item>
+            <div class="p-1">
+              {i + 1}
             </div>
-          </div>
-        {/key}
-      {/each}
-
-      <!-- Floating Menu -->
-      <div class="flex items-center px-5 absolute left-1/2 -translate-x-1/2 bottom-12 h-14 w-1/2 bg-[#15151982] rounded-full border-[#303030] border">
-        <!-- Left Arrow -->
-        <button onclick="{() => cycleFeatures(-1)}">
-          <Icon icon="bxs:left-arrow" color="#a1a1a1" width="24" height="24"  />
+          </Carousel.Item>
+        {/each}
+      </Carousel.Content>
+      <Carousel.Previous />
+      <Carousel.Next />
+    </Carousel.Root>
+    </div>
+    <!-- <div class="flex flex-col items-center mt-8">
+      <span class="text-lg text-white text-center mb-4 max-w-xl">{features[activeIndex].description}</span>
+      <div class="flex items-center px-5 h-14 w-[28rem] bg-[#15151982] rounded-full border-[#303030] border">
+        <button class="px-3" on:click={() => cycle(-1)}>
+          <Icon icon="bxs:left-arrow" color="#a1a1a1" width="24" height="24" />
         </button>
-
-        <!-- Feature Title -->
-        <div class="flex grow justify-center gap-3">
-          <span class="font-poppins font-semibold text-xl text-white">{activeFeature.title}</span>
-          <Icon icon="mingcute:external-link-line" color="#a1a1a1" class="cursor-pointer" width="24" height="24" />
-        </div>
-
-        <!-- Right Arrow -->
-        <button onclick="{() => cycleFeatures(1)}">
+        <span class="flex-1 text-center font-poppins font-semibold text-xl text-white">{features[activeIndex].title}</span>
+        <button class="px-3" on:click={() => cycle(1)}>
           <Icon icon="bxs:right-arrow" color="#a1a1a1" width="24" height="24" />
         </button>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 

@@ -12,12 +12,12 @@ const menuButtons = [
   <a href="/" aria-label="Logo button">
     <div class="flex items-center gap-8">
       <div class="w-[37px] h-[44px] bg-cover bg-no-repeat" style="background-image: url('/logo/Soldier@76x90.png');"></div>
-      <span class="text-title text-white tracking-wider font-bungee">SOLDIER</span>
+      <span class="text-title text-foreground tracking-wider font-bungee">SOLDIER</span>
     </div>
   </a>
 
   <div class="flex items-center gap-12 flex-row-reverse">
-    <button class="px-3 py-2 text-white text-lg font-poppins rounded-xl bg-[#1e6997] font-medium drop-shadow-xl">Dashboard</button>
+    <button class="px-3 py-2 text-foreground text-lg font-poppins rounded-lg bg-[#1e6997] font-medium drop-shadow-xl">Dashboard</button>
 
     <div class="flex items-center">
       {#each menuButtons as button, i}
