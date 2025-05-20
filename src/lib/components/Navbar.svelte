@@ -1,10 +1,11 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
 
-const menuButtons = [
-  { name: "Features", href: "/#features" },
-  { name: "Pricing", href: "/pricing" },
-  { name: "Docs", href: "https://docs.soldierbot.app" }
-]
+  const menuButtons = [
+    { name: "Features", href: "/#features" },
+    { name: "Pricing", href: "/pricing" },
+    { name: "Docs", href: "https://docs.soldierbot.app" }
+  ];
 
 </script>
 
@@ -17,7 +18,10 @@ const menuButtons = [
   </a>
 
   <div class="flex items-center gap-12 flex-row-reverse">
-    <button class="px-3 py-2 text-foreground text-lg font-poppins rounded-lg bg-[#1e6997] font-medium drop-shadow-xl">Dashboard</button>
+    <button
+      class="px-3 py-2 text-foreground text-lg font-poppins rounded-lg bg-[#1e6997] font-medium drop-shadow-xl"
+      onclick="{() => goto('/dashboard')}"
+    >Dashboard</button>
 
     <div class="flex items-center">
       {#each menuButtons as button, i}

@@ -8,6 +8,7 @@
     description: string;
     icon: string;
     color: string;
+    url: string;
   }
 
   const atAGlance = [
@@ -17,24 +18,25 @@
   ];
 
   const features: Feature[] = [
-    { title: "Access Hierarchy", description: "Only allow trusted members with high privileges through Soldier.", icon: "streamline:hierarchy-2-solid", color: "#36A953" },
-    { title: "Secure Ranking", description: "Manage your group member's ranks securely and conveniently on Discord.", icon: "ion:shield-checkmark", color: "#36A2A9" },
-    { title: "Custom Xp Levels", description: "Allow your group members to advance through ranks as they earn xp, completely controlled and configured by you.", icon: "vaadin:diamond", color: "#7DA936" },
-    { title: "Award Management", description: "Award your group members with a cosmetic badge for their dedication to your group.", icon: "fluent-emoji-high-contrast:military-medal", color: "#8B36A9" },
-    { title: "Event Management", description: "Create events that are managed by Soldier to bulk reward users who complete them.", icon: "ion:calendar-sharp", color: "#A93D36" },
-    { title: "Configurable Ranklocks", description: "Disallow members from reaching certain ranks or rank ranges.", icon: "uis:padlock", color: "#3642A9" },
+    { title: "Access Hierarchy", description: "Only allow trusted members with high privileges through Soldier.", icon: "streamline:hierarchy-2-solid", color: "#36A953", url: "https://docs.soldierbot.app/guides/setup/#1-run-the-command" },
+    { title: "Secure Ranking", description: "Manage your group member's ranks securely and conveniently on Discord.", icon: "ion:shield-checkmark", color: "#36A2A9", url: "https://docs.soldierbot.app/commands/roblox/" },
+    { title: "Custom Xp Levels", description: "Allow your group members to advance through ranks as they earn xp, completely controlled and configured by you.", icon: "vaadin:diamond", color: "#7DA936", url: "https://docs.soldierbot.app/guides/xp/" },
+    { title: "Award Management", description: "Award your group members with a cosmetic badge for their dedication to your group.", icon: "fluent-emoji-high-contrast:military-medal", color: "#8B36A9", url: "" },
+    { title: "Event Management", description: "Create events that are managed by Soldier to bulk reward users who complete them.", icon: "ion:calendar-sharp", color: "#A93D36", url: "https://docs.soldierbot.app/guides/events/" },
+    { title: "Configurable Ranklocks", description: "Disallow members from reaching certain ranks or rank ranges.", icon: "uis:padlock", color: "#3642A9", url: "https://docs.soldierbot.app/guides/ranklocks/" },
   ];
 
   let api = $state<CarouselAPI>();
-  let current = $state(0);
+  let activeFeatureIndex = $state(0);
+  let activeFeature = $derived(features[activeFeatureIndex]);
+
   const count = $derived(api ? api.scrollSnapList().length : 0);
-  
   
   $effect(() => {
     if (api) {
-      current = api.selectedScrollSnap();
+      activeFeatureIndex = api.selectedScrollSnap();
       api.on("select", () => {
-        current = api!.selectedScrollSnap();
+        activeFeatureIndex = api!.selectedScrollSnap();
         console.log('1');
       });
     }
@@ -48,7 +50,9 @@
   
     <div class="pl-2 flex flex-col items-center gap-5 w-[36rem]">
       <span class="self-center font-poppins font-[500] text-[1.3rem] text-center">Soldier is the all-in-one stop to manage groups, create events and utilize Roblox assets.</span>
-      <button class="self-center font-poppins font-semibold text-xl px-4.5 py-3.5 bg-gradient-to-r from-[#1E697E] to-[#1D7777] rounded-[0.6rem] drop-shadow-2xl">Invite Soldier</button>
+      <a href="https://soldierbot.app/invite" target="_blank">
+        <button class="self-center font-poppins font-semibold text-xl px-4.5 py-3.5 bg-gradient-to-r from-[#1E697E] to-[#1D7777] rounded-[0.6rem] drop-shadow-2xl">Invite Soldier</button>
+      </a>
     </div>
   </div>
 
@@ -66,14 +70,14 @@
 
   <div class="flex items-center justify-center flex-col gap-7">
     <span class="font-poppins font-semibold text-4xl" id="about">About</span>
-    <div class="px-12 py-8 w-[35rem] rounded-xl bg-[#33394a4a]">
-      <span class="font-poppins font-[500] text-xl">Soldier was built to surpass expectations...</span>
+    <div class="pl-12 py-8 w-[32rem] rounded-xl bg-[#33394a4a]">
+      <span class="font-gg font-[500] text-xl">Soldier was built to surpass expectations...</span>
 
       <div class="mt-10 flex flex-col gap-3">
         {#each atAGlance as feature}
-          <div class="flex gap-10 items-center">
-            <img class="w-[45px] h-[645x]" src="/icons/{feature.icon}.png" alt="">
-            <span class="font-poppins text-xl">{feature.text}</span>
+          <div class="flex gap-5 items-center">
+            <img class="w-[40px] h-[40x]" src="/icons/{feature.icon}.png" alt="">
+            <span class="font-sofia font-medium text-xl">{feature.text}</span>
           </div>
         {/each}
       </div>
@@ -109,7 +113,7 @@
       </Carousel.Root>
     </div>
 
-    <span class="mt-10 font-karla text-xl text-center max-w-[36rem] h-20">{features[current].description}</span>
+    <span class="mt-10 font-sofia text-xl text-center max-w-[30rem] h-20">{activeFeature.description}</span>
 
     <!-- Carousel Controls -->
     <div class="mt-7 flex items-center px-5 w-[32rem] h-14 rounded-full bg-[#1515197b] border border-[#303030]">
@@ -120,8 +124,10 @@
 
       <!-- Feature Title -->
       <div class="flex grow justify-center gap-3">
-        <span class="font-gg font-semibold text-xl text-white">{features[current].title}</span>
-        <Icon icon="mingcute:external-link-line" class="cursor-pointer" width="24" height="24" />
+        <span class="font-gg font-semibold text-xl text-white">{activeFeature.title}</span>
+        <a href="{activeFeature.url}" target="_blank">
+          <Icon icon="mingcute:external-link-line" width="24" height="24" />
+        </a>
       </div>
 
       <!-- Next -->
