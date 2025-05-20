@@ -1,7 +1,7 @@
 <script lang="ts">
   import Icon from "@iconify/svelte";
-  import { Button } from "$lib/components/ui/button/index";
   import * as Carousel from "$lib/components/ui/carousel/index";
+  import { type CarouselAPI } from "$lib/components/ui/carousel/context";
   
   interface Feature {
     title: string;
@@ -24,6 +24,21 @@
     { title: "Event Management", description: "Create events that are managed by Soldier to bulk reward users who complete them.", icon: "ion:calendar-sharp", color: "#A93D36" },
     { title: "Configurable Ranklocks", description: "Disallow members from reaching certain ranks or rank ranges.", icon: "uis:padlock", color: "#3642A9" },
   ];
+
+  let api = $state<CarouselAPI>();
+  let current = $state(0);
+  const count = $derived(api ? api.scrollSnapList().length : 0);
+  
+  
+  $effect(() => {
+    if (api) {
+      current = api.selectedScrollSnap();
+      api.on("select", () => {
+        current = api!.selectedScrollSnap();
+        console.log('1');
+      });
+    }
+  });
 </script>
 
 <div class="flex justify-between items-center pt-4">
@@ -69,41 +84,55 @@
 <h2 class="my-16 font-poppins font-semibold text-4xl text-center" id="features">Features</h2>
 
 <div class="flex justify-center">
-  <div class="relative h-[70dvh] w-[80%] rounded-2xl flex flex-col items-center">
-    <div class="absolute bg-[#1b202679] inset-0 -z-10 rounded-3xl blur-lg"></div>
-    <div class="flex items-end justify-center gap-12 relative h-full w-full">
-      <Carousel.Root class="w-full max-w-xs">
+  <div class="relative h-[60dvh] w-[80%] rounded-2xl flex flex-col items-center">
+    <div class="absolute bg-gradient-to-br from-[#1c212679] to-[#1d232b79] -inset-5 -z-10 rounded-[7rem] blur-lg"></div>
+    <div class="flex flex-col items-start justify-center w-60 gap-10">
+      <Carousel.Root setApi={(emblaApi) => (api = emblaApi)} class="w-full" opts={{
+        align: "center",
+        loop: true,
+      }}>
       <Carousel.Content>
-        {#each Array(5) as _, i (i)}
-          <Carousel.Item>
-            <div class="p-1">
-              {i + 1}
+        {#each features as feature, i (i)}
+          <Carousel.Item class="">
+            <div
+              class="flex items-center gap-5 flex-col h-60 w-60 rounded-lg py-7 px-8"
+              style="background: linear-gradient(180deg, {feature.color}c8, {feature.color}14)"
+            >
+              <Icon icon={feature.icon} color="#a1a1a1" width="100" height="100"  />
+              <span class="text-center font-poppins font-semibold text-2xl text-normal">{feature.title}</span>
             </div>
           </Carousel.Item>
         {/each}
       </Carousel.Content>
-      <Carousel.Previous />
-      <Carousel.Next />
-    </Carousel.Root>
+      <!-- <Carousel.Previous />
+      <Carousel.Next /> -->
+      </Carousel.Root>
     </div>
-    <!-- <div class="flex flex-col items-center mt-8">
-      <span class="text-lg text-white text-center mb-4 max-w-xl">{features[activeIndex].description}</span>
-      <div class="flex items-center px-5 h-14 w-[28rem] bg-[#15151982] rounded-full border-[#303030] border">
-        <button class="px-3" on:click={() => cycle(-1)}>
-          <Icon icon="bxs:left-arrow" color="#a1a1a1" width="24" height="24" />
-        </button>
-        <span class="flex-1 text-center font-poppins font-semibold text-xl text-white">{features[activeIndex].title}</span>
-        <button class="px-3" on:click={() => cycle(1)}>
-          <Icon icon="bxs:right-arrow" color="#a1a1a1" width="24" height="24" />
-        </button>
+
+    <span class="mt-10 font-karla text-xl text-center max-w-[36rem] h-20">{features[current].description}</span>
+
+    <!-- Carousel Controls -->
+    <div class="mt-7 flex items-center px-5 w-[32rem] h-14 rounded-full bg-[#1515197b] border border-[#303030]">
+      <!-- Previous -->
+      <button onclick="{() => api!.scrollPrev()}">
+        <Icon icon="majesticons:arrow-left" class="rounded-full p-1 bg-[#2b2b2f]" width="30" height="30"  />
+      </button>
+
+      <!-- Feature Title -->
+      <div class="flex grow justify-center gap-3">
+        <span class="font-gg font-semibold text-xl text-white">{features[current].title}</span>
+        <Icon icon="mingcute:external-link-line" class="cursor-pointer" width="24" height="24" />
       </div>
-    </div> -->
+
+      <!-- Next -->
+      <button onclick="{() => api!.scrollNext()}">
+        <Icon icon="majesticons:arrow-right" class="rounded-full p-1 bg-[#2b2b2f]" width="30" height="30" />
+      </button>
+    </div>
   </div>
 </div>
 
 <div class="h-48 w-48"></div>
-
-
 
 <!-- Animations: -->
 <!-- Add a bottom fade popup to the hero text, then the demo screenshot -->
